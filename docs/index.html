@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Renewal Verdict — Renew or Move?</title>
+<meta name="description" content="Price the renewal hike against the true cost of moving: movers, overlap, deposits, your hours, and the new place's monthly deltas. One honest verdict.">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#140D13">
+<link rel="icon" href="icons/icon-32.png">
+<style>
+:root{--bg:#140D13;--surface:#201419;--surface2:#2A1A22;--text:#F3EAE0;--muted:#C9B8AE;--accent:#B76E79;--accent2:#B49A5B;--line:#3D2630;--good:#B49A5B;--bad:#D98A94}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;line-height:1.5}
+.wrap{max-width:1060px;margin:0 auto;padding:28px 18px 60px}
+.eyebrow{letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-size:.72rem;text-align:center}
+h1{font-size:clamp(2rem,5vw,3.4rem);text-align:center;margin:.2em 0 .1em;color:var(--text)}
+.sub{text-align:center;color:var(--muted);font-style:italic;max-width:680px;margin:0 auto 26px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:inset 0 1px 0 rgba(183,110,121,.35),0 10px 30px rgba(0,0,0,.35)}
+.card h2{margin:0 0 6px;font-size:1.15rem;color:var(--accent2);letter-spacing:.04em}
+.card p.hint{color:var(--muted);font-size:.86rem;margin:0 0 14px}
+label{display:block;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 0 4px}
+input,select{width:100%;background:#170E14;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:10px 12px;font-size:1rem;font-family:inherit}
+input:focus{outline:2px solid var(--accent);border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero{grid-column:1/-1;text-align:center;padding:30px 20px}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:158px;height:158px;border-radius:50%;border:3px double var(--accent2);background:radial-gradient(circle at 35% 30%,#3A1E28,#201419 70%);color:var(--accent2);font-weight:bold;letter-spacing:.08em;text-align:center;padding:14px;font-size:1.02rem;box-shadow:inset 0 1px 0 rgba(183,110,121,.5),0 8px 24px rgba(0,0,0,.5);margin:8px auto}
+.bignum{font-size:clamp(2rem,6vw,3.2rem);color:var(--accent2);font-weight:bold;line-height:1.1}
+.hero p{color:var(--muted);max-width:640px;margin:10px auto 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px}
+.stat{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:inset 0 1px 0 rgba(183,110,121,.25)}
+.stat b{display:block;font-size:1.25rem;color:var(--accent2)} .stat span{font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}th{color:var(--accent);text-transform:uppercase;font-size:.72rem;letter-spacing:.08em}
+.bar{display:flex;height:26px;border-radius:6px;overflow:hidden;border:1px solid var(--line);margin:10px 0}
+.bar div{display:flex;align-items:center;justify-content:center;font-size:.72rem;color:#140D13;font-weight:bold;min-width:0;overflow:hidden;white-space:nowrap}
+button{background:var(--accent);color:#1D0F14;border:none;border-radius:9px;padding:11px 16px;font-family:inherit;font-weight:bold;cursor:pointer;font-size:.95rem}
+button.ghost{background:transparent;color:var(--accent2);border:1px solid var(--accent2)}
+button:hover{filter:brightness(1.1)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.presets{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+.presets button{background:transparent;color:var(--text);border:1px solid var(--accent);font-weight:normal}
+.saved{font-size:.9rem;color:var(--muted)} .saved li{margin:6px 0}
+footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:30px;font-style:italic}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+</style></head><body><div class="wrap">
+<div class="eyebrow">The Bull Brew · Daily Tool</div>
+<h1>The Renewal Verdict</h1>
+<p class="sub">Your landlord slid a hike under the door and called it routine. Fine. Price the hike honestly — against movers, overlap rent, deposits, and your own hours — and see whether leaving actually pays.</p>
+
+<div class="presets">
+<button data-preset="modest">Modest Bump</button>
+<button data-preset="squeeze">City Squeeze</button>
+<button data-preset="upgrade">Upgrade Temptation</button>
+</div>
+
+<div class="grid">
+<section class="card hero">
+<div class="eyebrow">The Verdict</div>
+<div class="seal" id="seal">—</div>
+<div class="bignum" id="diffBig">$0</div>
+<p id="verdictText">Enter your numbers.</p>
+<div class="stats">
+<div class="stat"><b id="stayEff">$0</b><span>Stay · effective / mo</span></div>
+<div class="stat"><b id="moveEff">$0</b><span>Move · effective / mo</span></div>
+<div class="stat"><b id="beAlt">$0</b><span>Break-even new rent</span></div>
+<div class="stat"><b id="payback">—</b><span>Moving-cost payback</span></div>
+<div class="stat"><b id="hikePct">0%</b><span>The hike they asked for</span></div>
+</div>
+</section>
+
+<section class="card"><h2>The Renewal Offer</h2><p class="hint">What staying actually costs.</p>
+<label>Current rent ($/mo)</label><input id="currentRent" type="number" value="1850">
+<label>Renewal rent offered ($/mo)</label><input id="renewalRent" type="number" value="1995">
+<label>Renewal term (months)</label><input id="term" type="number" value="12">
+</section>
+
+<section class="card"><h2>The Other Place</h2><p class="hint">The best real alternative you could actually sign — not a fantasy listing.</p>
+<label>New place rent ($/mo)</label><input id="altRent" type="number" value="1750">
+<label>What the upgrade is worth to you ($/mo)</label><input id="amenity" type="number" value="50">
+<p class="hint">Better light, a yard, a shorter life in traffic — price it honestly, or put 0.</p>
+<div class="row">
+<div><label>Transport Δ ($/mo)</label><input id="dTransport" type="number" value="-40"></div>
+<div><label>Utilities Δ ($/mo)</label><input id="dUtilities" type="number" value="20"></div>
+</div>
+<label>Parking Δ ($/mo, new − old)</label><input id="dParking" type="number" value="0">
+</section>
+
+<section class="card"><h2>The True Cost of Moving</h2><p class="hint">The part everyone forgets until the truck is booked.</p>
+<div class="row">
+<div><label>Movers / truck ($)</label><input id="movers" type="number" value="650"></div>
+<div><label>Deposits &amp; fees lost ($)</label><input id="deposits" type="number" value="400"></div>
+</div>
+<div class="row">
+<div><label>Broker / application ($)</label><input id="broker" type="number" value="0"></div>
+<div><label>Overlap days (double rent)</label><input id="overlapDays" type="number" value="5"></div>
+</div>
+<div class="row">
+<div><label>Setup &amp; misc ($)</label><input id="setup" type="number" value="150"></div>
+<div><label>Your hours moving (hrs)</label><input id="hours" type="number" value="12"></div>
+</div>
+<label>Your time is worth ($/hr)</label><input id="hourly" type="number" value="30">
+<div class="stats"><div class="stat"><b id="oneTime">$0</b><span>One-time moving bill</span></div></div>
+</section>
+
+<section class="card"><h2>Cost Anatomy</h2><p class="hint">Where the move total goes over the term.</p>
+<div class="bar" id="anatomy"></div>
+<div id="anatomyText" class="saved"></div>
+<h2 style="margin-top:20px">Term Sensitivity</h2>
+<table><thead><tr><th>Term</th><th>Stay total</th><th>Move total</th><th>Moving saves</th></tr></thead><tbody id="termTable"></tbody></table>
+</section>
+
+<section class="card"><h2>New-Rent Sensitivity</h2><p class="hint">If the other place negotiates — or creeps up.</p>
+<table><thead><tr><th>New rent</th><th>Move total</th><th>Moving saves</th><th>Payback</th></tr></thead><tbody id="altTable"></tbody></table>
+<div class="btnrow">
+<button id="saveBtn">Save this case</button>
+<button class="ghost" id="copyBtn">Copy summary</button>
+</div>
+<ul class="saved" id="savedList"></ul>
+</section>
+</div>
+<footer>Education, not advice. Moving costs are estimates — get the truck quote before you bluff your landlord with it.</footer>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const num=id=>{const v=parseFloat($(id).value);return isNaN(v)?0:v};
+const money=v=>{const s=v<0?'-':'';return s+'$'+Math.abs(Math.round(v)).toLocaleString('en-US')};
+const PRESETS={
+ modest:{currentRent:1850,renewalRent:1995,term:12,altRent:1750,amenity:50,dTransport:-40,dUtilities:20,dParking:0,movers:650,deposits:400,broker:0,overlapDays:5,setup:150,hours:12,hourly:30},
+ squeeze:{currentRent:2400,renewalRent:2688,term:12,altRent:2350,amenity:0,dTransport:30,dUtilities:10,dParking:75,movers:900,deposits:600,broker:1200,overlapDays:7,setup:250,hours:16,hourly:40},
+ upgrade:{currentRent:1600,renewalRent:1664,term:12,altRent:1950,amenity:250,dTransport:-60,dUtilities:35,dParking:0,movers:500,deposits:300,broker:0,overlapDays:3,setup:400,hours:10,hourly:25}
+};
+function calc(over){
+ const o=Object.assign({currentRent:num('currentRent'),renewalRent:num('renewalRent'),term:Math.max(1,num('term')),altRent:num('altRent'),amenity:num('amenity'),dTransport:num('dTransport'),dUtilities:num('dUtilities'),dParking:num('dParking'),movers:num('movers'),deposits:num('deposits'),broker:num('broker'),overlapDays:num('overlapDays'),setup:num('setup'),hours:num('hours'),hourly:num('hourly')},over||{});
+ const overlap=o.overlapDays/30*o.altRent;
+ const oneTime=o.movers+o.deposits+o.broker+overlap+o.setup+o.hours*o.hourly;
+ const deltaNet=o.dTransport+o.dUtilities+o.dParking-o.amenity;
+ const stayTotal=o.renewalRent*o.term;
+ const moveTotal=o.altRent*o.term+oneTime+deltaNet*o.term;
+ const diff=stayTotal-moveTotal;
+ const monthlySave=o.renewalRent-o.altRent-deltaNet;
+ const payback=monthlySave>0?oneTime/monthlySave:Infinity;
+ const beAlt=o.renewalRent-oneTime/o.term-deltaNet;
+ const hike=o.currentRent>0?(o.renewalRent-o.currentRent)/o.currentRent*100:0;
+ return {o,overlap,oneTime,deltaNet,stayTotal,moveTotal,diff,monthlySave,payback,beAlt,hike};
+}
+function render(){
+ const r=calc(),o=r.o;
+ $('oneTime').textContent=money(r.oneTime);
+ $('stayEff').textContent=money(o.renewalRent);
+ $('moveEff').textContent=money(r.moveTotal/o.term);
+ $('beAlt').textContent=money(r.beAlt);
+ $('payback').textContent=isFinite(r.payback)?r.payback.toFixed(1)+' mo':'Never';
+ $('hikePct').textContent=r.hike.toFixed(1)+'%';
+ $('diffBig').textContent=(r.diff>=0?'Moving saves ':'Staying saves ')+money(Math.abs(r.diff));
+ $('diffBig').className='bignum '+(r.diff>=0?'pos':'neg');
+ let seal,txt;
+ if(r.hike>=9&&r.diff<0){seal='RENEWAL TRAP';txt='The hike is steep — and moving still costs more. That is the trap: the increase hurts, but the truck, the overlap and the fees hurt more. Your best move is negotiating, not leaving.';}
+ else if(r.diff>=750){seal='MOVE';txt='Leaving pays, even after every moving cost is counted honestly. Do not renew out of laziness — the saving is real money over the term.';}
+ else if(r.diff<=-750){seal='SIGN IT';txt='Staying wins clearly. The renewal hike is annoying; the alternative is expensive. Sign, and spend your energy on something that actually pays.';}
+ else{seal='CLOSE CALL';txt='It is within a few hundred dollars either way. Decide on the life, not the ledger — commute, light, neighbours, and how much you hate packing.';}
+ $('seal').textContent=seal;$('verdictText').textContent=txt;
+ // anatomy
+ const parts=[['New rent',o.altRent*o.term,'#B76E79'],['One-time move',r.oneTime,'#B49A5B'],['Monthly deltas',Math.max(0,r.deltaNet)*o.term,'#7A4A56']];
+ const tot=parts.reduce((a,p)=>a+p[1],0)||1;
+ $('anatomy').innerHTML=parts.map(p=>'<div style="background:'+p[2]+';width:'+(p[1]/tot*100)+'%">'+money(p[1])+'</div>').join('');
+ $('anatomyText').textContent='Stay total '+money(r.stayTotal)+' · Move total '+money(r.moveTotal)+' over '+o.term+' months. Net monthly deltas (transport, utilities, parking, minus upgrade value): '+money(r.deltaNet)+'/mo. Overlap double-rent priced at '+money(r.overlap)+'.';
+ // term table
+ $('termTable').innerHTML=[6,9,12,18,24].map(t=>{const x=calc({term:t});return '<tr><td>'+t+' mo</td><td>'+money(x.stayTotal)+'</td><td>'+money(x.moveTotal)+'</td><td class="'+(x.diff>=0?'pos':'neg')+'">'+money(x.diff)+'</td></tr>'}).join('');
+ // alt table
+ $('altTable').innerHTML=[-150,-75,0,75,150].map(d=>{const x=calc({altRent:o.altRent+d});return '<tr><td>'+money(o.altRent+d)+'</td><td>'+money(x.moveTotal)+'</td><td class="'+(x.diff>=0?'pos':'neg')+'">'+money(x.diff)+'</td><td>'+(isFinite(x.payback)?x.payback.toFixed(1)+' mo':'Never')+'</td></tr>'}).join('');
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',render));
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{const p=PRESETS[b.dataset.preset];Object.keys(p).forEach(k=>{$(k).value=p[k]});render()}));
+function loadSaved(){try{return JSON.parse(localStorage.getItem('renewal-verdict')||'[]')}catch(e){return[]}}
+function drawSaved(){$('savedList').innerHTML=loadSaved().map((s,i)=>'<li>'+s.name+' — '+s.seal+', '+(s.diff>=0?'moving saves ':'staying saves ')+money(Math.abs(s.diff))+' over '+s.term+' mo <button class="ghost" data-del="'+i+'">✕</button></li>').join('');document.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{const a=loadSaved();a.splice(+b.dataset.del,1);localStorage.setItem('renewal-verdict',JSON.stringify(a));drawSaved()}))}
+$('saveBtn').addEventListener('click',()=>{const r=calc();const a=loadSaved();a.push({name:'Case '+(a.length+1)+' · '+new Date().toLocaleDateString(),seal:$('seal').textContent,diff:Math.round(r.diff),term:r.o.term});localStorage.setItem('renewal-verdict',JSON.stringify(a));drawSaved()});
+$('copyBtn').addEventListener('click',()=>{const r=calc();const t='The Renewal Verdict — '+$('seal').textContent+'\nStay: '+money(r.o.renewalRent)+'/mo ('+money(r.stayTotal)+' over '+r.o.term+' mo)\nMove: effective '+money(r.moveTotal/r.o.term)+'/mo ('+money(r.moveTotal)+' incl. '+money(r.oneTime)+' one-time)\nDifference: '+(r.diff>=0?'moving saves ':'staying saves ')+money(Math.abs(r.diff))+'\nBreak-even new rent: '+money(r.beAlt)+' · Payback: '+(isFinite(r.payback)?r.payback.toFixed(1)+' months':'never')+'\nHike asked: '+r.hike.toFixed(1)+'%';(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{$('copyBtn').textContent='Copied ✓';setTimeout(()=>$('copyBtn').textContent='Copy summary',1500)}).catch(()=>{prompt('Copy:',t)})});
+render();drawSaved();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+</script></body></html>
